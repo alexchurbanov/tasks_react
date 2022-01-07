@@ -4,7 +4,7 @@ import NewTaskButton from "./NewTaskButton";
 
 function Board() {
 	return (
-		<div>
+		<div className={'board'}>
 			<TaskItem/>
 			<NewTaskButton/>
 		</div>
