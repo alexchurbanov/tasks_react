@@ -2,12 +2,10 @@ import '../styles/TaskForm.sass';
 
 function TaskForm() {
 	return (
-		<div>
-			<form>
-				<input/>
-				<button type={"button"}>Do something</button>
-			</form>
-		</div>
+		<form className='task-form'>
+			<input className='form-input'/>
+			<button className='form-button' type={"button"}>Add Task</button>
+		</form>
 	)
 }
 

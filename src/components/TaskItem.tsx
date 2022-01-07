@@ -1,13 +1,11 @@
 import '../styles/TaskItem.sass';
-import TaskTitle from "./TaskTitle";
-import TaskTable from "./TaskTable";
 
 function TaskItem() {
 	return (
-		<div>
-			<TaskTitle/>
-			<TaskTable/>
-		</div>
+		<li className='task-item'>
+			<input type="checkbox" className="task-checkbox"/>
+			<span className='task-title'>Task Title</span>
+		</li>
 	)
 }
 

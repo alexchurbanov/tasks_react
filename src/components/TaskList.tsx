@@ -1,8 +1,23 @@
 import '../styles/TaskList.sass';
+import TaskItem from "./TaskItem";
 
 function TaskList() {
 	return (
-		<div>Hello world!</div>
+		<ul>
+			<TaskItem/>
+			<TaskItem/>
+			<TaskItem/>
+			<TaskItem/>
+			<TaskItem/>
+			<TaskItem/>
+			<TaskItem/>
+			<TaskItem/>
+			<TaskItem/>
+			<TaskItem/>
+			<TaskItem/>
+			<TaskItem/>
+			<TaskItem/>
+		</ul>
 	)
 }
 

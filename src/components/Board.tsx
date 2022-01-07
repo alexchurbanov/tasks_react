@@ -1,11 +1,11 @@
 import '../styles/Board.sass';
-import TaskItem from "./TaskItem";
+import TaskBox from './TaskBox';
 import NewTaskButton from "./NewTaskButton";
 
 function Board() {
 	return (
-		<div className={'board'}>
-			<TaskItem/>
+		<div className='board'>
+			<TaskBox/>
 			<NewTaskButton/>
 		</div>
 	)

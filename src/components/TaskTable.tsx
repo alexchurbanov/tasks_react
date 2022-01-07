@@ -4,7 +4,7 @@ import TaskList from "./TaskList";
 
 function TaskTable() {
 	return (
-		<div>
+		<div className='task-table'>
 			<TaskForm/>
 			<TaskList/>
 		</div>

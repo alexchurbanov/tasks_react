@@ -1,0 +1,17 @@
+@use 'mixins' as *
+
+.task-form
+  display: grid
+  grid-template-columns: 1fr 0.5fr
+  grid-auto-rows: 30px
+  grid-column-gap: 5px
+  justify-content: center
+
+.form-input
+  padding: 2px
+  border: none
+  border-radius: 5px
+  resize: none
+
+.form-button
+  @include animated-button
