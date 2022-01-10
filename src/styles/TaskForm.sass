@@ -1,22 +1,29 @@
 @use 'mixins' as *
-$min-height: 40px
 
 .task-form
   position: relative
+  min-height: $form-min-height
 
 .form-input
   padding: 7px
   border: none
   border-radius: 5px
-  min-height: $min-height
+  min-height: $form-min-height
   width: 95%
 
 .form-button
-  min-height: $min-height
+  min-height: $form-min-height
   position: absolute
   border: none
-  color: #06639a
+  color: $main-color-dark
   font-size: larger
   font-weight: bolder
   background-color: transparent
   cursor: pointer
+
+  &:hover
+    color: $main-color-light
+
+  &:active
+    transform: translateY(-1px)
+    transition-duration: 300ms

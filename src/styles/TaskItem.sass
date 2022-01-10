@@ -1,9 +1,10 @@
 @use 'mixins' as *
 
+$checkbox-width: 1em
+
 .task-item
-  display: grid
-  grid-template-columns: 20px 1fr
-  grid-column-gap: 5px
+  display: flex
+  gap: 5px
   align-items: center
   padding: 0.5em
   white-space: pre-wrap
@@ -11,14 +12,16 @@
   line-height: 22px
 
   &:hover
-    @include hover-animation
-    cursor: pointer
+    @include title-hover-animation
+    cursor: grab
 
   &:active
     cursor: grabbing
 
+.task-title
+  cursor: text
 
 .task-checkbox
-  width: 1em
+  width: $checkbox-width
   height: 1em
   cursor: pointer

@@ -1,13 +1,15 @@
 @use 'mixins' as *
+
 .task-box
   display: grid
   padding: 20px
-  grid-template-rows: 30px 1fr
+  grid-template-rows: auto 1fr
   grid-row-gap: 20px
   background-color: rgba(255, 255, 255, 0.82)
   border-radius: 5px
   min-width: $box-min-width
   cursor: grab
   user-select: none
+
   &:active
     cursor: grabbing

@@ -1,8 +1,10 @@
+@use "mixins" as *
+
 *, *:before, *:after
   box-sizing: border-box
 
 body
-  background: linear-gradient(180deg, #3ca0de 60%, #06639a) fixed
+  background: linear-gradient(180deg, $main-color-light 60%, $main-color-dark) fixed
   font-family: system-ui, -apple-system, system-ui, "Helvetica Neue", Helvetica, Arial, sans-serif
 
 ul
