@@ -1,5 +1,5 @@
 import '../styles/NewTaskButton.sass';
-import {addTaskBox} from "../store/reducer";
+import {addTaskBox} from "../store/slices/TaskBoxSlice";
 import {useAppDispatch} from "../store/hooks";
 
 function NewTaskButton() {

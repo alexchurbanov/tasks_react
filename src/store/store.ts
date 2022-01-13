@@ -1,9 +1,9 @@
 import {configureStore} from '@reduxjs/toolkit';
-import boardReducer from "./reducer";
+import taskBox from "./slices/TaskBoxSlice";
 
 export const store = configureStore({
 	reducer: {
-		board: boardReducer
+		taskBox
 	},
 });
 

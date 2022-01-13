@@ -2,19 +2,17 @@ import '../styles/TaskBox.sass';
 import BoxTitle from "./BoxTitle";
 import TaskTable from "./TaskTable";
 import {useAppSelector} from "../store/hooks";
-import {selectTaskBoxByID} from "../store/reducer";
+import {TaskBoxType} from "../store/slices/TaskBoxSlice";
 
 interface TaskBoxProps {
-	id: string;
+	item: TaskBoxType
 }
 
-function TaskBox({id}: TaskBoxProps) {
-	const taskBox = useAppSelector((state) => {
-		return selectTaskBoxByID(state, id) || {title: ''};
-	});
+function TaskBox({item}: TaskBoxProps) {
+
 	return (
 		<div className='task-box'>
-			<BoxTitle title={taskBox.title}/>
+			<BoxTitle title={item.title}/>
 			<TaskTable/>
 		</div>
 	)
