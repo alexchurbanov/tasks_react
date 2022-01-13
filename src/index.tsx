@@ -4,7 +4,7 @@ import 'normalize.css';
 import './styles/index.sass';
 import Board from './components/Board';
 import reportWebVitals from './reportWebVitals';
-import {store} from './store';
+import {store} from './store/store';
 import {Provider} from 'react-redux';
 
 ReactDOM.render(
