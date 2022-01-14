@@ -1,7 +1,7 @@
 import '../styles/TaskForm.sass';
 import {useAppDispatch} from "../store/hooks";
 import React, {useState} from "react";
-import {addTask} from "../store/slices/TaskBoxSlice";
+import {addTask} from "../store/slices/TaskSlice";
 
 interface TaskFormProps {
 	taskBoxId: string;
