@@ -1,6 +1,6 @@
 import '../styles/TaskItem.sass';
-import {TaskType, toggleComplete} from "../store/slices/TaskSlice";
-import {useAppDispatch} from "../store/hooks";
+import {TaskType, toggleComplete} from '../store/slices/TaskSlice';
+import {useAppDispatch} from '../store/hooks';
 
 interface TaskItemProps {
 	item: TaskType
@@ -14,7 +14,7 @@ function TaskItem({item}: TaskItemProps) {
 
 	return (
 		<li className='task-item'>
-			<input type="checkbox" className="task-checkbox" checked={item.completed} onChange={handleCheck}/>
+			<input type='checkbox' className='task-checkbox' checked={item.completed} onChange={handleCheck}/>
 			<span className='task-title'>{item.title}</span>
 		</li>
 	)

@@ -1,5 +1,5 @@
 import '../styles/BoxTitle.sass';
-import {useState} from "react";
+import {useState} from 'react';
 
 interface BoxTitleProps {
 	title: string;

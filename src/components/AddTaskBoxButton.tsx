@@ -1,6 +1,6 @@
 import '../styles/NewTaskButton.sass';
-import {addTaskBox} from "../store/slices/TaskBoxSlice";
-import {useAppDispatch} from "../store/hooks";
+import {addTaskBox} from '../store/slices/TaskBoxSlice';
+import {useAppDispatch} from '../store/hooks';
 
 function AddTaskBoxButton() {
 	const dispatch = useAppDispatch();

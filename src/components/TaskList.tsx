@@ -1,6 +1,6 @@
 import '../styles/TaskList.sass';
-import TaskItem from "./TaskItem";
-import {TaskType} from "../store/slices/TaskSlice";
+import TaskItem from './TaskItem';
+import {TaskType} from '../store/slices/TaskSlice';
 
 interface TaskListProps {
 	tasks: Array<TaskType>;

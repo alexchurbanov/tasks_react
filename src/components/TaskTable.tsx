@@ -1,7 +1,7 @@
 import '../styles/TaskTable.sass';
-import TaskForm from "./TaskForm";
-import TaskList from "./TaskList";
-import {TaskType} from "../store/slices/TaskSlice";
+import TaskForm from './TaskForm';
+import TaskList from './TaskList';
+import {TaskType} from '../store/slices/TaskSlice';
 
 interface TaskTableProps {
 	tasks: Array<TaskType>;

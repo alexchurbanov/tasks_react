@@ -1,8 +1,8 @@
 import '../styles/Board.sass';
 import TaskBox from './TaskBox';
-import AddTaskBoxButton from "./AddTaskBoxButton";
-import {useAppSelector} from "../store/hooks";
-import {selectTaskBoxes} from "../store/slices/TaskBoxSlice";
+import AddTaskBoxButton from './AddTaskBoxButton';
+import {useAppSelector} from '../store/hooks';
+import {selectTaskBoxes} from '../store/slices/TaskBoxSlice';
 
 function Board() {
 	const list = useAppSelector(selectTaskBoxes).map(item => {

@@ -1,9 +1,9 @@
 import '../styles/TaskBox.sass';
-import BoxTitle from "./BoxTitle";
-import TaskTable from "./TaskTable";
-import {TaskBoxType} from "../store/slices/TaskBoxSlice";
-import {useAppSelector} from "../store/hooks";
-import {selectTasksByTaskBoxId} from "../store/slices/TaskSlice";
+import BoxTitle from './BoxTitle';
+import TaskTable from './TaskTable';
+import {TaskBoxType} from '../store/slices/TaskBoxSlice';
+import {useAppSelector} from '../store/hooks';
+import {selectTasksByTaskBoxId} from '../store/slices/TaskSlice';
 
 interface TaskBoxProps {
 	item: TaskBoxType
