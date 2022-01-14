@@ -2,7 +2,7 @@ import '../styles/NewTaskButton.sass';
 import {addTaskBox} from "../store/slices/TaskBoxSlice";
 import {useAppDispatch} from "../store/hooks";
 
-function NewTaskButton() {
+function AddTaskBoxButton() {
 	const dispatch = useAppDispatch();
 
 	return (
@@ -13,4 +13,4 @@ function NewTaskButton() {
 }
 
 
-export default NewTaskButton;
+export default AddTaskBoxButton;

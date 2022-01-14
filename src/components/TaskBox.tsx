@@ -1,7 +1,6 @@
 import '../styles/TaskBox.sass';
 import BoxTitle from "./BoxTitle";
 import TaskTable from "./TaskTable";
-import {useAppSelector} from "../store/hooks";
 import {TaskBoxType} from "../store/slices/TaskBoxSlice";
 
 interface TaskBoxProps {
@@ -9,11 +8,11 @@ interface TaskBoxProps {
 }
 
 function TaskBox({item}: TaskBoxProps) {
-
+	const tasks = Object.values(item.tasks);
 	return (
 		<div className='task-box'>
 			<BoxTitle title={item.title}/>
-			<TaskTable/>
+			<TaskTable tasks={tasks} taskBoxId={item.id}/>
 		</div>
 	)
 }

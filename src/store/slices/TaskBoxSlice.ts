@@ -2,18 +2,26 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {RootState} from "../store";
 import {v4 as uuidv4} from "uuid";
 
-export interface TaskBoxType {
+interface Basic {
 	id: string;
 	title: string;
-	tasks: Array<string>;
+}
+
+export interface TaskBoxType extends Basic {
+	tasks: {
+		[taskId: string]: TaskType;
+	};
+}
+
+export interface TaskType extends Basic {
+	completed: boolean;
 }
 
 interface State {
-	[taskBoxID: string]: TaskBoxType;
+	[taskBoxId: string]: TaskBoxType;
 }
 
-const initialState: State = {
-}
+const initialState: State = {};
 
 export const taskBoardSlice = createSlice({
 	name: 'taskBox',
@@ -23,14 +31,23 @@ export const taskBoardSlice = createSlice({
 			const taskBox: TaskBoxType = {
 				id: uuidv4(),
 				title: 'Title',
-				tasks: []
+				tasks: {}
 			}
 			state[taskBox.id] = taskBox;
+		},
+		addTask(state, action: PayloadAction<{ title: string, taskBoxId: string }>) {
+			const {taskBoxId, title} = action.payload;
+			const task: TaskType = {
+				id: uuidv4(),
+				title,
+				completed: false
+			}
+			state[taskBoxId].tasks[task.id] = task;
 		}
 	}
 })
 
-export const {addTaskBox} = taskBoardSlice.actions;
-export const selectTaskBoxes = (state: RootState) => state.taskBox
+export const {addTaskBox, addTask} = taskBoardSlice.actions;
+export const selectTaskBoxes = (state: RootState) => state.taskBox;
 
 export default taskBoardSlice.reducer

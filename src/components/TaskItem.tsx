@@ -1,10 +1,15 @@
 import '../styles/TaskItem.sass';
+import {TaskType} from "../store/slices/TaskBoxSlice";
 
-function TaskItem() {
+interface TaskItemProps {
+	item: TaskType
+}
+
+function TaskItem({item}: TaskItemProps) {
 	return (
 		<li className='task-item'>
-			<input type="checkbox" className="task-checkbox"/>
-			<span className='task-title'>Task Title</span>
+			<input type="checkbox" className="task-checkbox" checked={item.completed}/>
+			<span className='task-title'>{item.title}</span>
 		</li>
 	)
 }
