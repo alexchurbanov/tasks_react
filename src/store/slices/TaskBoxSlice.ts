@@ -1,4 +1,4 @@
-import {createSlice} from '@reduxjs/toolkit';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {RootState} from '../store';
 import {v4 as uuidv4} from 'uuid';
 import {Basic} from '../../types';
@@ -22,10 +22,14 @@ export const taskBoardSlice = createSlice({
 				title: 'Title'
 			}
 			state[taskBox.id] = taskBox;
-		}
+		},
+		removeTaskBox(state, action: PayloadAction<{ taskBoxId: string }>) {
+			const {taskBoxId} = action.payload;
+			delete state[taskBoxId];
+		},
 	}
 })
-export const {addTaskBox} = taskBoardSlice.actions;
+export const {addTaskBox, removeTaskBox} = taskBoardSlice.actions;
 export const selectTaskBoxes = (state: RootState) => Object.values(state.taskBox);
 
 export default taskBoardSlice.reducer;
