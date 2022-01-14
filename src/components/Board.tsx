@@ -5,10 +5,8 @@ import {useAppSelector} from "../store/hooks";
 import {selectTaskBoxes} from "../store/slices/TaskBoxSlice";
 
 function Board() {
-	const taskBoxes = useAppSelector(selectTaskBoxes);
-	const list = Object.entries(taskBoxes).map(item => {
-		const [id, taskBox] = item;
-		return <TaskBox key={id} item={taskBox}/>;
+	const list = useAppSelector(selectTaskBoxes).map(item => {
+		return <TaskBox key={item.id} item={item}/>;
 	});
 
 	return (

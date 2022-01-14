@@ -1,7 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {RootState} from "../store";
-import {v4 as uuidv4} from "uuid";
-import { Basic } from '../../types';
+import {RootState} from '../store';
+import {v4 as uuidv4} from 'uuid';
+import {Basic} from '../../types';
 
 export interface TaskBoxType extends Basic {
 }
@@ -26,6 +26,6 @@ export const taskBoardSlice = createSlice({
 	}
 })
 export const {addTaskBox} = taskBoardSlice.actions;
-export const selectTaskBoxes = (state: RootState) => state.taskBox;
+export const selectTaskBoxes = (state: RootState) => Object.values(state.taskBox);
 
-export default taskBoardSlice.reducer
+export default taskBoardSlice.reducer;

@@ -1,7 +1,7 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {RootState} from "../store";
-import {v4 as uuidv4} from "uuid";
-import {Basic} from "../../types";
+import {RootState} from '../store';
+import {v4 as uuidv4} from 'uuid';
+import {Basic} from '../../types';
 
 export interface TaskType extends Basic {
 	taskBoxId: string;
@@ -43,6 +43,6 @@ export const {addTask, toggleComplete, changeParent} = taskSlice.actions;
 export const selectTasks = (state: RootState) => state.task;
 export const selectTasksByTaskBoxId = (state: RootState, taskBoxId: string) => Object.values(state.task).filter(item => item.taskBoxId === taskBoxId);
 
-export default taskSlice.reducer
+export default taskSlice.reducer;
 
 
