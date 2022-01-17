@@ -16,10 +16,11 @@ export const taskBoardSlice = createSlice({
 	name: 'taskBox',
 	initialState,
 	reducers: {
-		addTaskBox(state) {
+		addTaskBox(state, action: PayloadAction<{ title: string }>) {
+			const {title} = action.payload;
 			const taskBox: TaskBoxType = {
 				id: uuidv4(),
-				title: 'Title'
+				title
 			}
 			state[taskBox.id] = taskBox;
 		},
@@ -27,9 +28,13 @@ export const taskBoardSlice = createSlice({
 			const {taskBoxId} = action.payload;
 			delete state[taskBoxId];
 		},
+		changeTitle(state, action: PayloadAction<{ newTitle: string, taskBoxId: string }>) {
+			const {newTitle, taskBoxId} = action.payload;
+			state[taskBoxId].title = newTitle;
+		}
 	}
 })
-export const {addTaskBox, removeTaskBox} = taskBoardSlice.actions;
+export const {addTaskBox, removeTaskBox, changeTitle} = taskBoardSlice.actions;
 export const selectTaskBoxes = (state: RootState) => Object.values(state.taskBox);
 
 export default taskBoardSlice.reducer;

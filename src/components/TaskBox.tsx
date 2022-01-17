@@ -16,8 +16,8 @@ function TaskBox({item}: TaskBoxProps) {
 
 	return (
 		<div className='task-box'>
-			<button style={{width: '20px', height: '20px'}} onClick={() => dispatch(deleteTaskBoxWithTasks(item.id))}/>
-			<BoxTitle title={item.title}/>
+			<button style={{width: '20px', height: '20px'}} onClick={() => dispatch(deleteTaskBoxWithTasks(item.id))}>x</button>
+			<BoxTitle title={item.title} taskBoxId={item.id}/>
 			<TaskTable tasks={tasks} taskBoxId={item.id}/>
 		</div>
 	)

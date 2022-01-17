@@ -36,6 +36,10 @@ export const taskSlice = createSlice({
 			const {taskId, newParentId} = action.payload;
 			state[taskId].taskBoxId = newParentId;
 		},
+		changeTitle(state, action: PayloadAction<{ newTitle: string, taskId: string }>) {
+			const {newTitle, taskId} = action.payload;
+			state[taskId].title = newTitle;
+		},
 		removeTask(state, action: PayloadAction<{ taskId: string }>) {
 			const {taskId} = action.payload;
 			delete state[taskId];
@@ -48,7 +52,7 @@ export const taskSlice = createSlice({
 		}
 	}
 })
-export const {addTask, toggleComplete, changeParent, removeTask, removeTasksByTaskBoxId} = taskSlice.actions;
+export const {addTask, toggleComplete, changeParent, removeTask, removeTasksByTaskBoxId, changeTitle} = taskSlice.actions;
 export const selectTasks = (state: RootState) => state.task;
 export const selectTasksByTaskBoxId = (state: RootState, taskBoxId: string) => Object.values(state.task).filter(item => item.taskBoxId === taskBoxId);
 

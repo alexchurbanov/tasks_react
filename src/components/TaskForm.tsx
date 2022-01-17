@@ -13,6 +13,7 @@ function TaskForm({taskBoxId}: TaskFormProps) {
 
 	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
+		if (!taskTitle.trim()) return setTaskTitle(taskTitle.trim());
 		dispatch(addTask({title: taskTitle, taskBoxId}));
 		setTaskTitle('');
 	}
