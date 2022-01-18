@@ -1,15 +1,16 @@
 import '../styles/TaskList.sass';
 import TaskItem from './TaskItem';
-import {TaskType} from '../store/slices/TaskSlice';
+import {selectTasksByTaskBoxId} from '../store/slices/TaskSlice';
+import {useAppSelector} from "../store/hooks";
 
 interface TaskListProps {
-	tasks: Array<TaskType>;
+	taskBoxId: string;
 }
 
-function TaskList({tasks} : TaskListProps) {
-	const list = tasks.map(item => {
+function TaskList({taskBoxId}: TaskListProps) {
+	const list = useAppSelector(state => selectTasksByTaskBoxId(state, taskBoxId)).map(item => {
 		return <TaskItem key={item.id} item={item}/>
-	})
+	});
 
 	return (
 		<ul>
