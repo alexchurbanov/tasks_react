@@ -2,6 +2,7 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {RootState} from '../store';
 import {v4 as uuidv4} from 'uuid';
 import {Basic} from '../../types';
+import {removeTaskBox} from "./TaskBoxSlice";
 
 export interface TaskType extends Basic {
 	taskBoxId: string;
@@ -44,15 +45,18 @@ export const taskSlice = createSlice({
 			const {taskId} = action.payload;
 			delete state[taskId];
 		},
-		removeTasksByTaskBoxId(state, action: PayloadAction<{ taskBoxId: string }>) {
+	},
+	extraReducers: builder => {
+		builder.addCase(removeTaskBox, (state, action) => {
 			const {taskBoxId} = action.payload;
 			Object.values(state).forEach(item => {
 				if (item.taskBoxId === taskBoxId) delete state[item.id];
 			})
-		}
+		})
 	}
 })
-export const {addTask, toggleComplete, changeParent, removeTask, removeTasksByTaskBoxId, changeTitle} = taskSlice.actions;
+
+export const {addTask, toggleComplete, changeParent, removeTask, changeTitle} = taskSlice.actions;
 export const selectTasks = (state: RootState) => state.task;
 export const selectTasksByTaskBoxId = (state: RootState, taskBoxId: string) => Object.values(state.task).filter(item => item.taskBoxId === taskBoxId);
 
