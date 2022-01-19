@@ -1,3 +1,5 @@
+@use "mixins" as *
+
 .edit-title-form
   display: grid
   grid-template-columns: 1fr auto
@@ -5,9 +7,18 @@
 
   input
     border: none
+    border-bottom: 2px solid $main-color-dark
     background: transparent
     text-align: center
+    outline: none
 
-.edit-two-buttons
-  display: flex
-  gap: 2px
+.confirm-button, .cancel-button
+  background: none
+  border: none
+  width: 30px
+  height: 25px
+
+  &:hover
+    @include title-hover-animation
+    background-color: transparent
+    box-shadow: none
