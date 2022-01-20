@@ -10,7 +10,7 @@ export interface TaskType extends Basic {
 }
 
 interface State {
-	[taskBoxId: string]: TaskType;
+	[taskId: string]: TaskType;
 }
 
 const initialState: State = {};

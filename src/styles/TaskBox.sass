@@ -8,13 +8,23 @@
   background-color: rgba(255, 255, 255, 0.82)
   border-radius: 5px
   min-width: $box-min-width
-  cursor: grab
   user-select: none
 
   &:hover
     background-color: rgba(255, 255, 255, 0.85)
-  &:active
-    cursor: grabbing
+
+.box-action-buttons
+  display: flex
+  justify-content: space-between
+
+.drag-handle
+  display: inline-block
+  width: 20px
+  height: 20px
+  border-radius: 100%
+  background-color: $main-color-light
+  &:hover
+    cursor: move
 
 .delete-task-box
   background: none
