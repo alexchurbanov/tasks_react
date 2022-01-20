@@ -16,7 +16,7 @@ function AddTaskBoxButton() {
 		setEdit(false);
 	}
 
-	if (edit) return <EditForm title={''} handleCancel={handleCancel} handleSubmit={handleSubmit}/>;
+	if (edit) return <EditForm title={''} handleCancel={handleCancel} handleSubmit={handleSubmit} color={'white'}/>;
 	return (
 		<div>
 			<button className='add-button' onClick={() => setEdit(true)} title='Add new list'>+ Add New List</button>
