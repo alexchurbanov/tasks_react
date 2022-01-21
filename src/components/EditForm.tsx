@@ -6,7 +6,7 @@ interface EditFormProps {
 	title: string;
 	handleCancel: () => any;
 	handleSubmit: (newTitle: string) => any;
-	styles?: object;
+	color? : string
 }
 
 function EditForm(props: EditFormProps) {
@@ -22,11 +22,11 @@ function EditForm(props: EditFormProps) {
 	}
 
 	return (
-		<form style={props.styles} className='edit-title-form' onSubmit={handleSubmit}
+		<form className='edit-title-form' onSubmit={handleSubmit}
 					onKeyDown={e => e.key === 'Escape' && handleCancel()}>
 			<input autoFocus value={newTitle}
 						 onChange={(e) => setNewTitle(e.target.value)}
-						 placeholder={props.title} required/>
+						 placeholder={props.title} required style={props.color ? {color: props.color} : {}}/>
 			<div className='edit-two-buttons'>
 				<button type='submit' className='confirm-button'>
 					<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 256 256">
