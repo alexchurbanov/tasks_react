@@ -1,14 +1,17 @@
 @use 'mixins' as *
 
 $checkbox-width: 1em
-
-.task-item
+@mixin item
   display: flex
   justify-content: space-between
   padding: 0.5em
   white-space: pre-wrap
   max-width: $box-min-width
   line-height: 22px
+  margin-bottom: 5px
+
+.task-item
+  @include item
 
   &:hover
     @include title-hover-animation
@@ -30,3 +33,19 @@ $checkbox-width: 1em
   border: none
   width: 30px
   height: 20px
+  cursor: pointer
+
+.completed-item
+  @include item
+  border-radius: 5px
+  background-color: $main-color-light
+  color: white
+
+  &:hover
+    cursor: grab
+
+  &:active
+    cursor: grabbing
+
+  .task-title
+   cursor: grab

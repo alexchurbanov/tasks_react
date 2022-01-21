@@ -42,7 +42,11 @@ function TaskBox({item, index}: TaskBoxProps) {
 			className={`task-box ${isDragging ? 'dragging' : ''} ${canDrop ? 'droppable' : ''} ${hovered ? 'hovered' : ''}`}
 			ref={taskBoxRef}>
 			<div className='box-action-buttons'>
-				<div className='drag-handle' ref={handleRef}/>
+				<div className='drag-handle' ref={handleRef}>
+					<svg height="20px" version="1.1" viewBox="0 0 32 32" width="20px" xmlns="http://www.w3.org/2000/svg">
+						<g id="Layer_1"/><g id="move"><g><polygon points="18,20 18,26 22,26 16,32 10,26 14,26 14,20" style={{fill:'rgb(44,116,221)'}}/><polygon points="14,12 14,6 10,6 16,0 22,6 18,6 18,12" style={{fill:'rgb(44,116,221)'}}/><polygon points="12,18 6,18 6,22 0,16 6,10 6,14 12,14" style={{fill:'rgb(44,116,221)'}}/><polygon points="20,14 26,14 26,10 32,16 26,22 26,18 20,18" style={{fill:'rgb(44,116,221)'}}/></g></g>
+					</svg>
+				</div>
 				<button className='delete-task-box' onClick={() => dispatch(removeTaskBox({taskBoxId: item.id}))}
 								title='Remove list'>
 					<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 256 256">

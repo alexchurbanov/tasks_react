@@ -34,6 +34,10 @@ function TaskItem({item, index}: TaskItemProps) {
 	});
 	drag(drop(ref));
 
+	useEffect(() => {
+		drag(drop(ref));
+	})
+
 	const handleCheck = () => {
 		dispatch(toggleComplete({taskId: item.id}))
 	};
@@ -47,9 +51,9 @@ function TaskItem({item, index}: TaskItemProps) {
 
 	if (edit) return <EditForm title={item.title} handleSubmit={handleSubmit} handleCancel={handleCancel}/>;
 	return (
-		<li className='task-item' ref={ref}>
+		<li className={`${item.completed ? 'completed-item' : 'task-item'}`} ref={ref}>
 			<input type='checkbox' className='task-checkbox' checked={item.completed} onChange={handleCheck}/>
-			<span className='task-title' onClick={() => setEdit(true)}>{item.title}</span>
+			<span className='task-title' onClick={() => !item.completed && setEdit(true)}>{item.title}</span>
 			<button className='delete-task-button' onClick={() => dispatch(removeTask({taskId: item.id}))}
 							title='Remove task'>
 				<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 256 256">
