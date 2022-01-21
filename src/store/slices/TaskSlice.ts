@@ -10,10 +10,18 @@ export interface TaskType extends Basic {
 }
 
 interface State {
-	[taskId: string]: TaskType;
+	byId: {
+		[taskId: string]: TaskType;
+	},
+	iDsByTaskBoxId: {
+		[taskBoxId: string]: string[]
+	}
 }
 
-const initialState: State = {};
+const initialState: State = {
+	byId: {},
+	iDsByTaskBoxId: {},
+};
 
 export const taskSlice = createSlice({
 	name: 'task',
@@ -27,38 +35,43 @@ export const taskSlice = createSlice({
 				title,
 				completed: false,
 			}
-			state[task.id] = task;
+			state.byId[task.id] = task
+			if (!state.iDsByTaskBoxId[taskBoxId]) state.iDsByTaskBoxId[taskBoxId] = [];
+			state.iDsByTaskBoxId[taskBoxId].push(task.id);
 		},
 		toggleComplete(state, action: PayloadAction<{ taskId: string }>) {
 			const {taskId} = action.payload;
-			state[taskId].completed = !state[taskId].completed;
+			state.byId[taskId].completed = !state.byId[taskId].completed;
 		},
-		changeParent(state, action: PayloadAction<{ taskId: string, newParentId: string }>) {
-			const {taskId, newParentId} = action.payload;
-			state[taskId].taskBoxId = newParentId;
+		changeParent(state, action: PayloadAction<{ oldIndex: number, newIndex: number, odlParentId: string, newParentId: string }>) {
+			const {oldIndex, newIndex, newParentId, odlParentId} = action.payload;
+			const [removed] = state.iDsByTaskBoxId[odlParentId].splice(oldIndex, 1);
+			state.byId[removed].taskBoxId = newParentId;
+			if (state.iDsByTaskBoxId[newParentId]) state.iDsByTaskBoxId[newParentId].splice(newIndex, 0, removed);
+			else state.iDsByTaskBoxId[newParentId] = [removed];
 		},
 		changeTitle(state, action: PayloadAction<{ newTitle: string, taskId: string }>) {
 			const {newTitle, taskId} = action.payload;
-			state[taskId].title = newTitle;
+			state.byId[taskId].title = newTitle;
 		},
 		removeTask(state, action: PayloadAction<{ taskId: string }>) {
 			const {taskId} = action.payload;
-			delete state[taskId];
+			state.iDsByTaskBoxId[state.byId[taskId].taskBoxId] = state.iDsByTaskBoxId[state.byId[taskId].taskBoxId].filter(id => id !== taskId);
+			delete state.byId[taskId];
 		},
 	},
 	extraReducers: builder => {
 		builder.addCase(removeTaskBox, (state, action) => {
 			const {taskBoxId} = action.payload;
-			Object.values(state).forEach(item => {
-				if (item.taskBoxId === taskBoxId) delete state[item.id];
-			})
+			state.iDsByTaskBoxId[taskBoxId]?.forEach(id => delete state.byId[id]);
+			delete state.iDsByTaskBoxId[taskBoxId];
 		})
 	}
 })
 
 export const {addTask, toggleComplete, changeParent, removeTask, changeTitle} = taskSlice.actions;
 export const selectTasks = (state: RootState) => state.task;
-export const selectTasksByTaskBoxId = (state: RootState, taskBoxId: string) => Object.values(state.task).filter(item => item.taskBoxId === taskBoxId);
+export const selectTasksByTaskBoxId = (state: RootState, taskBoxId: string) => state.task.iDsByTaskBoxId[taskBoxId]?.map(id => state.task.byId[id]) || [];
 
 export default taskSlice.reducer;
 

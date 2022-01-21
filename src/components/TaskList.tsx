@@ -1,20 +1,42 @@
 import '../styles/TaskList.sass';
 import TaskItem from './TaskItem';
-import {selectTasksByTaskBoxId} from '../store/slices/TaskSlice';
-import {useAppSelector} from "../store/hooks";
+import {changeParent, selectTasksByTaskBoxId} from '../store/slices/TaskSlice';
+import {useAppDispatch, useAppSelector} from "../store/hooks";
+import {useEffect, useRef, useState} from "react";
+import {useDrop} from "react-dnd";
+import {moveTaskBox} from "../store/slices/TaskBoxSlice";
+import {TaskDragItem} from "../types";
 
 interface TaskListProps {
 	taskBoxId: string;
 }
 
 function TaskList({taskBoxId}: TaskListProps) {
-	const list = useAppSelector(state => selectTasksByTaskBoxId(state, taskBoxId)).map(item => {
-		return <TaskItem key={item.id} item={item}/>
-	});
+	const selected = useAppSelector(state => selectTasksByTaskBoxId(state, taskBoxId));
+	const [tasks, setTasks] = useState(selected);
+	const dispatch = useAppDispatch();
+	const [, drop] = useDrop({
+		accept: 'task',
+		drop: (dragItem: TaskDragItem) => {
+			if (!selected.length)
+				dispatch(changeParent({
+					odlParentId: dragItem.parentId,
+					newParentId: taskBoxId,
+					oldIndex: dragItem.index,
+					newIndex: 0
+				}))
+		}
+	})
+
+	useEffect(() => {
+		setTasks(selected);
+	}, [JSON.stringify(selected)]);
 
 	return (
-		<ul>
-			{list}
+		<ul ref={drop} className='task-list'>
+			{tasks.map((item, index) => {
+				return <TaskItem key={item.id} item={item} index={index}/>
+			})}
 		</ul>
 	)
 }
