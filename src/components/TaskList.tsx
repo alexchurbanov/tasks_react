@@ -5,13 +5,14 @@ import {useAppDispatch, useAppSelector} from "../store/hooks";
 import {useEffect, useState} from "react";
 import {useDrop} from "react-dnd";
 import {TaskDragItem} from "../types";
+import {shallowEqual} from "react-redux";
 
 interface TaskListProps {
 	taskBoxId: string;
 }
 
 function TaskList({taskBoxId}: TaskListProps) {
-	const selected = useAppSelector(state => selectTasksByTaskBoxId(state, taskBoxId));
+	const selected = useAppSelector(state => selectTasksByTaskBoxId(state, taskBoxId), shallowEqual);
 	const [tasks, setTasks] = useState(selected);
 	const dispatch = useAppDispatch();
 	const [, drop] = useDrop({
@@ -29,7 +30,7 @@ function TaskList({taskBoxId}: TaskListProps) {
 
 	useEffect(() => {
 		setTasks(selected);
-	}, [JSON.stringify(selected)]);
+	}, [selected]);
 
 	return (
 		<ul ref={drop} className='task-list'>

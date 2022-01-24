@@ -4,9 +4,10 @@ import AddTaskBoxButton from './AddTaskBoxButton';
 import {useAppSelector} from '../store/hooks';
 import {selectTaskBoxes} from '../store/slices/TaskBoxSlice';
 import {useEffect, useState} from "react";
+import {shallowEqual} from "react-redux";
 
 function Board() {
-	const selected = useAppSelector(selectTaskBoxes);
+	const selected = useAppSelector(selectTaskBoxes, shallowEqual);
 	const [taskBoxes, setTaskBoxes] = useState(selected);
 	useEffect(() => {
 		setTaskBoxes(selected);
