@@ -39,7 +39,7 @@ function TaskBox({item, index}: TaskBoxProps) {
 
 	return (
 		<div
-			className={`task-box ${isDragging ? 'dragging' : ''} ${canDrop ? 'droppable' : ''} ${hovered ? 'hovered' : ''}`}
+			className={`task-box${isDragging ? ' dragging' : ''}${canDrop ? ' droppable' : ''}${hovered ? ' hovered' : ''}`}
 			ref={taskBoxRef}>
 			<div className='box-action-buttons'>
 				<div className='drag-handle' ref={handleRef}>

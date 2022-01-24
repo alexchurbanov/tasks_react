@@ -17,7 +17,7 @@ function TaskItem({item, index, taskBoxId}: TaskItemProps) {
 	const dispatch = useAppDispatch();
 	const ref = useRef(null);
 
-	const [, drop] = useDrop({
+	const [, drop] = useDrop(() => ({
 		accept: 'task',
 		drop: (dragItem: TaskDragItem) => {
 			if(dragItem.id !== item.id)
@@ -28,19 +28,18 @@ function TaskItem({item, index, taskBoxId}: TaskItemProps) {
 					newIndex: index
 				}));
 		},
-	})
-	const [, drag] = useDrag({
+	}));
+	const [, drag] = useDrag(() => ({
 		type: 'task',
 		item: {id: item.id, index, parentId: taskBoxId},
-	});
-	drag(drop(ref));
+	}));
 
 	useEffect(() => {
 		drag(drop(ref));
 	})
 
 	const handleCheck = () => {
-		dispatch(toggleComplete({taskId: item.id}))
+		dispatch(toggleComplete({taskId: item.id}));
 	};
 	const handleSubmit = (newTitle: string) => {
 		dispatch(changeTitle({newTitle, taskId: item.id}));

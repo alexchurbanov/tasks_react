@@ -15,7 +15,7 @@ function TaskList({taskBoxId}: TaskListProps) {
 	const selected = useAppSelector(state => selectTasksByTaskBoxId(state, taskBoxId), shallowEqual);
 	const [tasks, setTasks] = useState(selected);
 	const dispatch = useAppDispatch();
-	const [, drop] = useDrop({
+	const [{canDrop, hovered}, drop] = useDrop({
 		accept: 'task',
 		drop: (dragItem: TaskDragItem) => {
 			if (!selected.length)
@@ -25,15 +25,19 @@ function TaskList({taskBoxId}: TaskListProps) {
 					oldIndex: dragItem.index,
 					newIndex: 0
 				}))
-		}
-	})
+		},
+		collect: monitor => ({
+			canDrop: monitor.canDrop(),
+			hovered: monitor.isOver()
+		})
+	});
 
 	useEffect(() => {
 		setTasks(selected);
 	}, [selected]);
 
 	return (
-		<ul ref={drop} className='task-list'>
+		<ul ref={drop} className={`task-list${canDrop && !selected.length ? ' droppable' : ''}${hovered && !selected.length ? ' hovered' : ''}`}>
 			{tasks.map((item, index) => {
 				return <TaskItem key={item.id} item={item} index={index} taskBoxId={taskBoxId}/>
 			})}
