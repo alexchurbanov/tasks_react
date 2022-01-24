@@ -5,7 +5,6 @@ import {Basic} from '../../types';
 import {removeTaskBox} from "./TaskBoxSlice";
 
 export interface TaskType extends Basic {
-	taskBoxId: string;
 	completed: boolean;
 }
 
@@ -31,7 +30,6 @@ export const taskSlice = createSlice({
 			const {taskBoxId, title} = action.payload;
 			const task: TaskType = {
 				id: uuidv4(),
-				taskBoxId,
 				title,
 				completed: false,
 			}
@@ -46,7 +44,6 @@ export const taskSlice = createSlice({
 		changeParent(state, action: PayloadAction<{ oldIndex: number, newIndex: number, odlParentId: string, newParentId: string }>) {
 			const {oldIndex, newIndex, newParentId, odlParentId} = action.payload;
 			const [removed] = state.iDsByTaskBoxId[odlParentId].splice(oldIndex, 1);
-			state.byId[removed].taskBoxId = newParentId;
 			if (state.iDsByTaskBoxId[newParentId]) state.iDsByTaskBoxId[newParentId].splice(newIndex, 0, removed);
 			else state.iDsByTaskBoxId[newParentId] = [removed];
 		},
@@ -54,9 +51,9 @@ export const taskSlice = createSlice({
 			const {newTitle, taskId} = action.payload;
 			state.byId[taskId].title = newTitle;
 		},
-		removeTask(state, action: PayloadAction<{ taskId: string }>) {
-			const {taskId} = action.payload;
-			state.iDsByTaskBoxId[state.byId[taskId].taskBoxId] = state.iDsByTaskBoxId[state.byId[taskId].taskBoxId].filter(id => id !== taskId);
+		removeTask(state, action: PayloadAction<{ taskId: string, taskBoxId: string, index: number}>) {
+			const {taskId, taskBoxId, index} = action.payload;
+			state.iDsByTaskBoxId[taskBoxId].splice(index, 1);
 			delete state.byId[taskId];
 		},
 	},

@@ -2,9 +2,8 @@ import '../styles/TaskList.sass';
 import TaskItem from './TaskItem';
 import {changeParent, selectTasksByTaskBoxId} from '../store/slices/TaskSlice';
 import {useAppDispatch, useAppSelector} from "../store/hooks";
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useState} from "react";
 import {useDrop} from "react-dnd";
-import {moveTaskBox} from "../store/slices/TaskBoxSlice";
 import {TaskDragItem} from "../types";
 
 interface TaskListProps {
@@ -35,7 +34,7 @@ function TaskList({taskBoxId}: TaskListProps) {
 	return (
 		<ul ref={drop} className='task-list'>
 			{tasks.map((item, index) => {
-				return <TaskItem key={item.id} item={item} index={index}/>
+				return <TaskItem key={item.id} item={item} index={index} taskBoxId={taskBoxId}/>
 			})}
 		</ul>
 	)
