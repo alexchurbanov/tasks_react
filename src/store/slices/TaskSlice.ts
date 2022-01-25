@@ -1,10 +1,11 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {RootState} from '../store';
 import {v4 as uuidv4} from 'uuid';
-import {Basic} from '../../types';
 import {removeTaskBox} from "./TaskBoxSlice";
 
-export interface TaskType extends Basic {
+export interface TaskType {
+	id: string;
+	title: string;
 	completed: boolean;
 }
 
@@ -41,19 +42,26 @@ export const taskSlice = createSlice({
 			const {taskId} = action.payload;
 			state.byId[taskId].completed = !state.byId[taskId].completed;
 		},
-		changeParent(state, action: PayloadAction<{ oldIndex: number, newIndex: number, odlParentId: string, newParentId: string }>) {
-			const {oldIndex, newIndex, newParentId, odlParentId} = action.payload;
-			const [removed] = state.iDsByTaskBoxId[odlParentId].splice(oldIndex, 1);
-			if (state.iDsByTaskBoxId[newParentId]) state.iDsByTaskBoxId[newParentId].splice(newIndex, 0, removed);
-			else state.iDsByTaskBoxId[newParentId] = [removed];
+		moveTask(state, action: PayloadAction<{ itemId: string, targetId: string, itemParentId: string, targetParentId: string }>) {
+			const {itemId, targetId, itemParentId, targetParentId} = action.payload;
+			const itemIndex = state.iDsByTaskBoxId[itemParentId].findIndex(value => value === itemId);
+			const targetIndex = targetId ? state.iDsByTaskBoxId[targetParentId].findIndex(value => value === targetId) : 0;
+			if (itemParentId === targetParentId) {
+				state.iDsByTaskBoxId[targetParentId][targetIndex] = itemId;
+				state.iDsByTaskBoxId[targetParentId][itemIndex] = targetId;
+			} else {
+				state.iDsByTaskBoxId[itemParentId].splice(itemIndex, 1);
+				if (state.iDsByTaskBoxId[targetParentId]) state.iDsByTaskBoxId[targetParentId].splice(targetIndex, 0, itemId);
+				else state.iDsByTaskBoxId[targetParentId] = [itemId];
+			}
 		},
 		changeTitle(state, action: PayloadAction<{ newTitle: string, taskId: string }>) {
 			const {newTitle, taskId} = action.payload;
 			state.byId[taskId].title = newTitle;
 		},
-		removeTask(state, action: PayloadAction<{ taskId: string, taskBoxId: string, index: number}>) {
-			const {taskId, taskBoxId, index} = action.payload;
-			state.iDsByTaskBoxId[taskBoxId].splice(index, 1);
+		removeTask(state, action: PayloadAction<{ taskId: string, taskBoxId: string }>) {
+			const {taskId, taskBoxId} = action.payload;
+			state.iDsByTaskBoxId[taskBoxId] = state.iDsByTaskBoxId[taskBoxId].filter(id => id !== taskId);
 			delete state.byId[taskId];
 		},
 	},
@@ -66,7 +74,7 @@ export const taskSlice = createSlice({
 	}
 })
 
-export const {addTask, toggleComplete, changeParent, removeTask, changeTitle} = taskSlice.actions;
+export const {addTask, toggleComplete, moveTask, removeTask, changeTitle} = taskSlice.actions;
 export const selectTasks = (state: RootState) => state.task;
 export const selectTasksByTaskBoxId = (state: RootState, taskBoxId: string) => state.task.iDsByTaskBoxId[taskBoxId]?.map(id => state.task.byId[id]) || [];
 

@@ -5,10 +5,14 @@ import {moveTaskBox, removeTaskBox, TaskBoxType} from '../store/slices/TaskBoxSl
 import {useAppDispatch} from '../store/hooks';
 import React, {useRef} from "react";
 import {useDrag, useDrop} from "react-dnd";
-import {DragItem} from "../types";
 
 interface TaskBoxProps {
 	item: TaskBoxType;
+	index: number;
+}
+
+interface DragItem {
+	id: string;
 	index: number;
 }
 
@@ -26,13 +30,13 @@ function TaskBox({item, index}: TaskBoxProps) {
 	const [{canDrop, hovered}, drop] = useDrop({
 		accept: 'taskBox',
 		drop: (dragItem: DragItem) => {
-			if (dragItem.index === index) return;
 			dispatch(moveTaskBox({indexFrom: dragItem.index, indexTo: index}));
 		},
 		collect: monitor => ({
 			canDrop: monitor.canDrop(),
 			hovered: monitor.isOver({shallow: true})
-		})
+		}),
+		canDrop: (dragItem: DragItem) => dragItem.id !== item.id
 	})
 	drag(handleRef);
 	dragPreview(drop(taskBoxRef));

@@ -1,9 +1,10 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {RootState} from '../store';
 import {v4 as uuidv4} from 'uuid';
-import {Basic} from '../../types';
 
-export interface TaskBoxType extends Basic {
+export interface TaskBoxType {
+	id: string;
+	title: string;
 }
 
 interface State {

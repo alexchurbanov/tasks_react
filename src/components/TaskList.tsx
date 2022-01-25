@@ -1,10 +1,9 @@
 import '../styles/TaskList.sass';
-import TaskItem from './TaskItem';
-import {changeParent, selectTasksByTaskBoxId} from '../store/slices/TaskSlice';
+import TaskItem, {TaskDrag} from './TaskItem';
+import {moveTask, selectTasksByTaskBoxId} from '../store/slices/TaskSlice';
 import {useAppDispatch, useAppSelector} from "../store/hooks";
 import {useEffect, useState} from "react";
 import {useDrop} from "react-dnd";
-import {TaskDragItem} from "../types";
 import {shallowEqual} from "react-redux";
 
 interface TaskListProps {
@@ -17,19 +16,19 @@ function TaskList({taskBoxId}: TaskListProps) {
 	const dispatch = useAppDispatch();
 	const [{canDrop, hovered}, drop] = useDrop({
 		accept: 'task',
-		drop: (dragItem: TaskDragItem) => {
-			if (!selected.length)
-				dispatch(changeParent({
-					odlParentId: dragItem.parentId,
-					newParentId: taskBoxId,
-					oldIndex: dragItem.index,
-					newIndex: 0
-				}))
+		drop: (dragItem: TaskDrag) => {
+			dispatch(moveTask({
+				itemId: dragItem.id,
+				itemParentId: dragItem.parentId,
+				targetId: '',
+				targetParentId: taskBoxId,
+			}))
 		},
 		collect: monitor => ({
 			canDrop: monitor.canDrop(),
 			hovered: monitor.isOver()
-		})
+		}),
+		canDrop: () => !selected.length
 	});
 
 	useEffect(() => {
@@ -37,9 +36,10 @@ function TaskList({taskBoxId}: TaskListProps) {
 	}, [selected]);
 
 	return (
-		<ul ref={drop} className={`task-list${canDrop && !selected.length ? ' droppable' : ''}${hovered && !selected.length ? ' hovered' : ''}`}>
-			{tasks.map((item, index) => {
-				return <TaskItem key={item.id} item={item} index={index} taskBoxId={taskBoxId}/>
+		<ul ref={drop}
+				className={`task-list${canDrop && !selected.length ? ' droppable' : ''}${hovered && !selected.length ? ' hovered' : ''}`}>
+			{tasks.map((item) => {
+				return <TaskItem key={item.id} item={item} taskBoxId={taskBoxId}/>
 			})}
 		</ul>
 	)
