@@ -1,0 +1,20 @@
+@use 'mixins' as *
+
+$progress-height: 20px
+
+.progress-container
+  width: $form-width
+  text-align: center
+  background-color: rgba(255, 255, 255, 0.38)
+  border-radius: 5px
+  height: $progress-height
+
+.progress
+  background-color: $main-color-dark
+  border-radius: 5px
+  transition: width 0.5s ease-in-out
+  height: $progress-height
+
+.progress-label
+  display: inline-block
+  margin-left: 10px
