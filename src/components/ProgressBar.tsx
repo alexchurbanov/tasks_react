@@ -16,7 +16,10 @@ function ProgressBar({taskBoxId}: ProgressBarProps) {
 		<div className='progress-container'>
 			<div className='progress' style={{width: `${completed}%`}}>
 				<span className='progress-label'
-							style={{color: !completed ? "black" : "rgba(255, 255, 255, 0.87)"}}>{completed}%</span>
+							style={{
+								color: !completed ? "black" : "rgba(255, 255, 255, 0.87)",
+								marginLeft: !completed ? '10px' : 0
+							}}>{completed}%</span>
 			</div>
 		</div>
 	)
